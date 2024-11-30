@@ -1,10 +1,13 @@
 import {
+  IsArray,
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsString,
 } from 'class-validator';
+import { Role } from 'utils/enums';
 
 export class CreateUserDto {
   @IsString()
@@ -23,4 +26,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
   isVerified: boolean;
+  @IsArray()
+  role: string[];
 }

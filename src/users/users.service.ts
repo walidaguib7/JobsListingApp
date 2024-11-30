@@ -34,7 +34,13 @@ export class UsersService {
 
   async createUser(dto: CreateUserDto): Promise<void> {
     const hash = await bcrypt.hash(dto.password, 10);
-    const user = this.usersRepository.create({ ...dto, passwordHash: hash });
+
+    const user = this.usersRepository.create({
+      ...dto,
+      passwordHash: hash,
+      roles: dto.role,
+    });
+
     await this.usersRepository.save(user);
   }
 
@@ -59,6 +65,6 @@ export class UsersService {
       userId: userId,
     });
     if (!user) throw new NotFoundException();
-    await this.usersRepository.delete(user);
+    await this.usersRepository.remove(user);
   }
 }

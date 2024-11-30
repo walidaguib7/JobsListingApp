@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Role } from 'utils/enums';
 
 @Entity()
 export class User {
@@ -18,4 +25,6 @@ export class User {
   passwordHash: string;
   @Column({ default: false })
   isVerified: boolean;
+  @Column('text', { array: true })
+  roles: string[];
 }

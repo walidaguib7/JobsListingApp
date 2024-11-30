@@ -1,15 +1,15 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
-  type: 'mysql',
-  database: 'jobsListing',
+  type: 'postgres',
+  database: 'Jobs',
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/config/database/migrations/*.js'],
-  username: 'root',
+  username: 'postgres',
   host: 'localhost',
-  password: 'ninamimo23@@',
-  synchronize: false,
-  migrationsTableName: 'data_migration',
+  port: 5432,
+  password: 'walidaguib',
+  synchronize: true,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
