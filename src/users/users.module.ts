@@ -7,11 +7,20 @@ import { AuthModule } from 'src/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtService } from '@nestjs/jwt';
+import { MediaModule } from 'src/media/media.module';
+import { Media } from 'src/media/media.entity';
+import Redis from 'ioredis';
+import { MailModule } from 'config/mail/mail.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
+  imports: [
+    MailModule,
+    TypeOrmModule.forFeature([User, Media]),
+    forwardRef(() => AuthModule),
+    MediaModule,
+  ],
   controllers: [UsersController],
-  providers: [UsersService, JwtService],
+  providers: [UsersService, JwtService, Redis],
   exports: [UsersService],
 })
 export class UsersModule {}

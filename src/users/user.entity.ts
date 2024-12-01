@@ -1,8 +1,11 @@
+import { Media } from 'src/media/media.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from 'utils/enums';
@@ -27,4 +30,7 @@ export class User {
   isVerified: boolean;
   @Column('text', { array: true })
   roles: string[];
+  @OneToOne(() => Media, (media) => media.user)
+  @JoinColumn()
+  media: Media;
 }

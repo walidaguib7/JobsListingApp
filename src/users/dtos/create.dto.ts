@@ -26,6 +26,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
   isVerified: boolean;
+  mediaId: number;
   @IsArray()
   role: string[];
 }

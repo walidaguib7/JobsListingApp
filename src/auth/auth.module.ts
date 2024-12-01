@@ -7,6 +7,10 @@ import { LocalStrategy } from './local.strategy';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { jwtConstants } from 'utils/constants';
 import { JwtStrategy } from './jwt.strategy';
+import { MailService } from 'config/mail/mail.service';
+import { MailModule } from 'config/mail/mail.module';
+import { RedisModule } from '@nestjs-modules/ioredis';
+import Redis from 'ioredis';
 
 @Module({
   imports: [

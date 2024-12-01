@@ -4,6 +4,9 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/users/dtos/create.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/user.entity';
+import { MailService } from './../../config/mail/mail.service';
+import Redis from 'ioredis';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class AuthService {
