@@ -1,8 +1,10 @@
+import { Job } from 'src/job/job.entity';
 import { User } from 'src/users/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -26,4 +28,6 @@ export class Employer {
   @OneToOne(() => User, (user) => user.employer)
   @JoinColumn()
   user: User;
+  @OneToMany(() => Job, (job) => job.employer, { onDelete: 'CASCADE' })
+  jobs: Job[];
 }

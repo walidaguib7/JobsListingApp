@@ -11,6 +11,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailModule } from 'config/mail/mail.module';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { EmployerModule } from './employer/employer.module';
+import { JobModule } from './job/job.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { EmployerModule } from './employer/employer.module';
     AuthModule,
     MediaModule,
     EmployerModule,
+    JobModule,
   ],
   controllers: [AppController],
   providers: [AppService],
