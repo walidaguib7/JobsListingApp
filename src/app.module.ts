@@ -10,6 +10,7 @@ import { MediaModule } from './media/media.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailModule } from 'config/mail/mail.module';
 import { RedisModule } from '@nestjs-modules/ioredis';
+import { EmployerModule } from './employer/employer.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { RedisModule } from '@nestjs-modules/ioredis';
     UsersModule,
     AuthModule,
     MediaModule,
+    EmployerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

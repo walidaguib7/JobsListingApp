@@ -1,3 +1,4 @@
+import { Employer } from 'src/employer/employer.entity';
 import { Media } from 'src/media/media.entity';
 import {
   Column,
@@ -33,4 +34,6 @@ export class User {
   @OneToOne(() => Media, (media) => media.user)
   @JoinColumn()
   media: Media;
+  @OneToOne(() => Employer)
+  employer: Employer;
 }
