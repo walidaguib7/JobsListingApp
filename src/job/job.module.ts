@@ -11,9 +11,11 @@ import { Job } from './job.entity';
 import { Employer } from 'src/employer/employer.entity';
 import { User } from 'src/users/user.entity';
 import { UsersModule } from 'src/users/users.module';
+import { CachingModule } from 'config/caching/caching.module';
 
 @Module({
   imports: [
+    CachingModule,
     EmployerModule,
     AuthModule,
     UsersModule,

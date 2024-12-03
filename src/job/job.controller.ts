@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { JobService } from './job.service';
@@ -16,14 +17,15 @@ import { Role } from 'utils/enums';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { CreateJobDto } from './dtos/create.dto';
 import { UpdateJobDto } from './dtos/update.dto';
+import { PaginationDto } from 'helpers/PaginatoinDto';
 
 @Controller('job')
 export class JobController {
   constructor(private readonly jobService: JobService) {}
 
   @Get()
-  async getAll() {
-    return await this.jobService.getAllJobs();
+  async getAll(@Query() paginationDto: PaginationDto) {
+    return await this.jobService.getAllJobs(paginationDto);
   }
 
   @Get(':id')
