@@ -1,5 +1,6 @@
 import { Category } from 'src/categories/category.entity';
 import { Employer } from 'src/employer/employer.entity';
+import { Saved_Jobs } from 'src/saved_jobs/saved_jobs.entity';
 
 import {
   Column,
@@ -7,6 +8,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { JobType } from 'utils/enums';
@@ -32,4 +34,6 @@ export class Job {
   @ManyToMany(() => Category, (category) => category.jobs)
   @JoinTable({ name: 'Job_Categories' })
   categories: Category[];
+  @OneToMany(() => Saved_Jobs, (saved_jobs) => saved_jobs.user)
+  saved_jobs: Saved_Jobs[];
 }

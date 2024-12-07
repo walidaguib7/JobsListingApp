@@ -13,6 +13,7 @@ import { User } from 'src/users/user.entity';
 import { UsersModule } from 'src/users/users.module';
 import { CachingModule } from 'config/caching/caching.module';
 import { Category } from 'src/categories/category.entity';
+import { SavedJobsModule } from '../saved_jobs/saved_jobs.module';
 
 @Module({
   imports: [
@@ -25,5 +26,6 @@ import { Category } from 'src/categories/category.entity';
 
   controllers: [JobController],
   providers: [JobService, EmployerService, JwtService, Redis],
+  exports: [JobService],
 })
 export class JobModule {}
