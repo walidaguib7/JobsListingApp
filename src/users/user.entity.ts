@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Employer } from 'src/employer/employer.entity';
 import { Media } from 'src/media/media.entity';
 import {

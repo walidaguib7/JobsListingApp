@@ -12,6 +12,7 @@ import { Employer } from 'src/employer/employer.entity';
 import { User } from 'src/users/user.entity';
 import { UsersModule } from 'src/users/users.module';
 import { CachingModule } from 'config/caching/caching.module';
+import { Category } from 'src/categories/category.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { CachingModule } from 'config/caching/caching.module';
     EmployerModule,
     AuthModule,
     UsersModule,
-    TypeOrmModule.forFeature([Job, Employer]),
+    TypeOrmModule.forFeature([Job, Employer, Category]),
   ],
 
   controllers: [JobController],

@@ -3,9 +3,11 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   isString,
   IsString,
 } from 'class-validator';
+import { Category } from 'src/categories/category.entity';
 import { JobType } from 'utils/enums';
 
 export class CreateJobDto {
@@ -25,4 +27,6 @@ export class CreateJobDto {
   salary: string;
   @IsNumber()
   employerId: number;
+
+  categories: Category[];
 }

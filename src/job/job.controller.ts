@@ -17,7 +17,7 @@ import { Role } from 'utils/enums';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { CreateJobDto } from './dtos/create.dto';
 import { UpdateJobDto } from './dtos/update.dto';
-import { PaginationDto } from 'helpers/PaginatoinDto';
+import { PaginationDto } from './dtos/PaginatoinDto';
 
 @Controller('job')
 export class JobController {

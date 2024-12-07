@@ -12,6 +12,7 @@ import { MailModule } from 'config/mail/mail.module';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { EmployerModule } from './employer/employer.module';
 import { JobModule } from './job/job.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { JobModule } from './job/job.module';
     MediaModule,
     EmployerModule,
     JobModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

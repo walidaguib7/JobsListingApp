@@ -1,6 +1,14 @@
+import { Category } from 'src/categories/category.entity';
 import { Employer } from 'src/employer/employer.entity';
 
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { JobType } from 'utils/enums';
 
 @Entity()
@@ -21,4 +29,7 @@ export class Job {
   posted_At: Date;
   @ManyToOne(() => Employer, (employer) => employer.jobs)
   employer: Employer;
+  @ManyToMany(() => Category, (category) => category.jobs)
+  @JoinTable({ name: 'Job_Categories' })
+  categories: Category[];
 }
