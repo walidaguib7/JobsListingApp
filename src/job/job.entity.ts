@@ -1,3 +1,4 @@
+import { Application } from 'src/applications/application.entity';
 import { Category } from 'src/categories/category.entity';
 import { Employer } from 'src/employer/employer.entity';
 import { Saved_Jobs } from 'src/saved_jobs/saved_jobs.entity';
@@ -36,4 +37,6 @@ export class Job {
   categories: Category[];
   @OneToMany(() => Saved_Jobs, (saved_jobs) => saved_jobs.user)
   saved_jobs: Saved_Jobs[];
+  @OneToMany(() => Application, (application) => application.job)
+  applications: Application[];
 }

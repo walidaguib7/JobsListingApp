@@ -26,6 +26,7 @@ export class MediaService {
     dto.path = file.path;
     const instance = this.mediaRepositoy.create(dto);
     await this.mediaRepositoy.save(instance);
+    return instance;
   }
 
   async UpdateFile(id: number, model: Express.Multer.File) {

@@ -1,5 +1,12 @@
+import { Application } from 'src/applications/application.entity';
 import { User } from 'src/users/user.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({
   name: 'Media',
@@ -15,4 +22,6 @@ export class Media {
   createdAt: Date;
   @OneToOne(() => User, (user) => user.media)
   user: User;
+  @OneToMany(() => Application, (application) => application.resume)
+  applications: Application[];
 }

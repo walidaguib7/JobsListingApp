@@ -42,7 +42,7 @@ export class MediaController {
     }),
   )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.mediaService.uploadFile(file);
+    return await this.mediaService.uploadFile(file);
   }
 
   @Put('update/:id')

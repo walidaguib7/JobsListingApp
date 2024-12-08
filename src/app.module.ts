@@ -13,6 +13,8 @@ import { RedisModule } from '@nestjs-modules/ioredis';
 import { EmployerModule } from './employer/employer.module';
 import { JobModule } from './job/job.module';
 import { CategoriesModule } from './categories/categories.module';
+import { SavedJobsModule } from './saved_jobs/saved_jobs.module';
+import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
   imports: [
@@ -48,6 +50,8 @@ import { CategoriesModule } from './categories/categories.module';
     EmployerModule,
     JobModule,
     CategoriesModule,
+    SavedJobsModule,
+    ApplicationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
