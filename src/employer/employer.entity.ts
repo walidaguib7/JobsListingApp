@@ -1,4 +1,5 @@
 import { Job } from 'src/job/job.entity';
+import { Review } from 'src/reviews/review.entity';
 import { User } from 'src/users/user.entity';
 import {
   Column,
@@ -30,4 +31,6 @@ export class Employer {
   user: User;
   @OneToMany(() => Job, (job) => job.employer, { onDelete: 'CASCADE' })
   jobs: Job[];
+  @OneToMany(() => Review, (review) => review.employer)
+  reviews: Review[];
 }

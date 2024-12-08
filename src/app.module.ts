@@ -15,6 +15,7 @@ import { JobModule } from './job/job.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SavedJobsModule } from './saved_jobs/saved_jobs.module';
 import { ApplicationsModule } from './applications/applications.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { ApplicationsModule } from './applications/applications.module';
     CategoriesModule,
     SavedJobsModule,
     ApplicationsModule,
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
