@@ -47,4 +47,6 @@ export class User {
   applications: Application[];
   @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
+  @ManyToMany(() => Employer, (employer) => employer.followers)
+  followed_companies: Employer[];
 }

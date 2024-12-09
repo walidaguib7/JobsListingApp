@@ -42,6 +42,6 @@ export class EmployerService {
 
   async deleteEmployer(id: number) {
     const employer = await this.getEmployer(id);
-    await this.employerRepository.delete(employer);
+    await this.employerRepository.remove(employer);
   }
 }
