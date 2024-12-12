@@ -34,7 +34,7 @@ export class UsersService {
 
   async findbyId(userId: number): Promise<User> {
     const user = await this.usersRepository.findOneBy({
-      userId: userId,
+      userId,
     });
     if (!user) throw new NotFoundException();
     return user;

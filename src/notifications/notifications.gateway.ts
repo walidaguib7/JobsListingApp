@@ -30,17 +30,6 @@ export class NotificationsGateway {
     this.server.emit('onReceive', body);
   }
 
-  @SubscribeMessage('findAll')
-  async findAll(client: Socket) {
-    const userId = Number(client.handshake.query.userId);
-    if (!userId) {
-      client.disconnect();
-    }
-    const notifications = await this.notificationsService.fetchAll(userId);
-
-    this.server.emit('onfetch', notifications);
-  }
-
   async handleConnection(client: Socket) {
     const userId = Number(client.handshake.query.userId);
     if (!userId) {
