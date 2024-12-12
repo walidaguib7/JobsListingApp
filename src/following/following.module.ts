@@ -9,13 +9,13 @@ import { EmployerModule } from 'src/employer/employer.module';
 import { UsersModule } from 'src/users/users.module';
 import { CachingModule } from 'config/caching/caching.module';
 import { JwtService } from '@nestjs/jwt';
-import { EmployerService } from 'src/employer/employer.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Employer]),
     AuthModule,
     CachingModule,
+    UsersModule,
   ],
   controllers: [FollowingController],
   providers: [FollowingService, JwtService],

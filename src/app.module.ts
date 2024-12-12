@@ -17,6 +17,7 @@ import { SavedJobsModule } from './saved_jobs/saved_jobs.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { FollowingModule } from './following/following.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { FollowingModule } from './following/following.module';
     ApplicationsModule,
     ReviewsModule,
     FollowingModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

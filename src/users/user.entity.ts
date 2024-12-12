@@ -1,7 +1,7 @@
-import { Exclude } from 'class-transformer';
 import { Application } from 'src/applications/application.entity';
 import { Employer } from 'src/employer/employer.entity';
 import { Media } from 'src/media/media.entity';
+import { Notification } from 'src/notifications/notification.entity';
 import { Review } from 'src/reviews/review.entity';
 import { Saved_Jobs } from 'src/saved_jobs/saved_jobs.entity';
 import {
@@ -14,7 +14,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Role } from 'utils/enums';
 
 @Entity()
 export class User {
@@ -49,4 +48,6 @@ export class User {
   reviews: Review[];
   @ManyToMany(() => Employer, (employer) => employer.followers)
   followed_companies: Employer[];
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
 }

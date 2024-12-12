@@ -8,6 +8,9 @@ import { UpdateJobDto } from './dtos/update.dto';
 import { CachingService } from 'config/caching/caching.service';
 import { PaginationDto } from './dtos/PaginatoinDto';
 import { Category } from 'src/categories/category.entity';
+import { NotificationsService } from 'src/notifications/notifications.service';
+import { NotificationsGateway } from 'src/notifications/notifications.gateway';
+import { FollowingService } from 'src/following/following.service';
 
 @Injectable()
 export class JobService {
@@ -17,6 +20,9 @@ export class JobService {
     private readonly categoryRepository: Repository<Category>,
     private readonly employerService: EmployerService,
     private readonly cachingService: CachingService,
+    private readonly notificationsService: NotificationsService,
+    private readonly notificationGateway: NotificationsGateway,
+    private readonly followingService: FollowingService,
   ) {}
 
   async getAllJobs(paginationDto: PaginationDto) {
@@ -72,6 +78,8 @@ export class JobService {
       throw new Error('Employer not found');
     }
 
+    const message = `New job posted by ${employer.CompanyName}: ${dto.title}`;
+
     // Create the job and associate the employer
     const job = this.jobsRepository.create(dto);
     job.employer = employer;
@@ -97,6 +105,21 @@ export class JobService {
     // Invalidate cache for jobs
     await this.cachingService.removeByPattern('jobs');
     await this.cachingService.removeByPattern('job');
+
+    //sending notifications
+    const followers = await this.followingService.getCompanyFollowers(
+      employer.id,
+    );
+    for (const follower of followers) {
+      await this.notificationsService.notify({
+        message: `new job posted by ${employer.CompanyName}`,
+        userUserId: follower.userId,
+      });
+    }
+
+    this.notificationGateway.server
+      .to(`followed_companies_${employer.id}`)
+      .emit('onReceive', message);
   }
 
   async updateJob(id: number, dto: UpdateJobDto) {

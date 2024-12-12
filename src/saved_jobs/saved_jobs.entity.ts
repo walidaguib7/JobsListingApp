@@ -8,8 +8,8 @@ export class Saved_Jobs {
   id: number;
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   savedAt: Date;
-  @ManyToOne(() => User, (user) => user.saved_jobs)
+  @ManyToOne(() => User, (user) => user.saved_jobs, { onDelete: 'CASCADE' })
   user: User;
-  @ManyToOne(() => Job, (job) => job.saved_jobs)
+  @ManyToOne(() => Job, (job) => job.saved_jobs, { onDelete: 'CASCADE' })
   job: Job;
 }
