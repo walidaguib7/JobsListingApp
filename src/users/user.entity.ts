@@ -1,4 +1,5 @@
 import { Application } from 'src/applications/application.entity';
+import { Conversation } from 'src/conversations/conversation.entity';
 import { Employer } from 'src/employer/employer.entity';
 import { Media } from 'src/media/media.entity';
 import { Notification } from 'src/notifications/notification.entity';
@@ -50,4 +51,6 @@ export class User {
   followed_companies: Employer[];
   @OneToMany(() => Notification, (notification) => notification.user)
   notifications: Notification[];
+  @OneToMany(() => Conversation, (conversation) => conversation.user)
+  conversations: Conversation[];
 }

@@ -18,6 +18,7 @@ import { ApplicationsModule } from './applications/applications.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { FollowingModule } from './following/following.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ConversationsModule } from './conversations/conversations.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     ReviewsModule,
     FollowingModule,
     NotificationsModule,
+    ConversationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

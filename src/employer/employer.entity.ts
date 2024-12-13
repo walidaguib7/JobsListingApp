@@ -1,3 +1,4 @@
+import { Conversation } from 'src/conversations/conversation.entity';
 import { Job } from 'src/job/job.entity';
 import { Review } from 'src/reviews/review.entity';
 import { User } from 'src/users/user.entity';
@@ -35,6 +36,8 @@ export class Employer {
   jobs: Job[];
   @OneToMany(() => Review, (review) => review.employer)
   reviews: Review[];
+  @OneToMany(() => Conversation, (conversation) => conversation.employer)
+  conversations: Conversation[];
   @ManyToMany(() => User, (user) => user.followed_companies)
   @JoinTable({
     name: 'following',
