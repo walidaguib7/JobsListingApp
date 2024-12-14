@@ -19,6 +19,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { FollowingModule } from './following/following.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ConversationsModule } from './conversations/conversations.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { ConversationsModule } from './conversations/conversations.module';
     FollowingModule,
     NotificationsModule,
     ConversationsModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

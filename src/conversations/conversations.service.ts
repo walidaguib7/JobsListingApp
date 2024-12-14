@@ -22,7 +22,7 @@ export class ConversationsService {
     @InjectRepository(Conversation)
     private readonly conversationsRepository: Repository<Conversation>,
     private readonly usersService: UsersService,
-    private readonly employerService: EmployerService,
+
     private readonly cachingService: CachingService,
   ) {}
 
@@ -57,7 +57,7 @@ export class ConversationsService {
       await this.cachingService.getFromCache<Conversation>(key);
     if (cachedConversation != null) return cachedConversation;
     const user = await this.usersService.findbyId(userId);
-    const employer = await this.employerService.getEmployer(employerId);
+    const employer = await this.usersService.findbyId(employerId);
     const conversation = await this.conversationsRepository.findOne({
       where: { user: user, employer: employer },
     });
@@ -68,7 +68,7 @@ export class ConversationsService {
 
   async createOne(dto: CreateConversation) {
     const user = await this.usersService.findbyId(dto.userId);
-    const employer = await this.employerService.getEmployer(dto.employerId);
+    const employer = await this.usersService.findbyId(dto.employerId);
     const conversation = this.conversationsRepository.create({
       title: dto.title,
       user,

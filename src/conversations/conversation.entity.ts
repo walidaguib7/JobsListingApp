@@ -1,6 +1,13 @@
 import { Employer } from 'src/employer/employer.entity';
+import { Messages } from 'src/messages/messages.entity';
 import { User } from 'src/users/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Conversation {
@@ -12,8 +19,10 @@ export class Conversation {
   createdAt: Date;
   @ManyToOne(() => User, (user) => user.conversations, { onDelete: 'CASCADE' })
   user: User;
-  @ManyToOne(() => Employer, (employer) => employer.conversations, {
+  @ManyToOne(() => User, (user) => user.conversations, {
     onDelete: 'CASCADE',
   })
-  employer: Employer;
+  employer: User;
+  @OneToMany(() => Messages, (messages) => messages.conversation)
+  messages: Messages[];
 }

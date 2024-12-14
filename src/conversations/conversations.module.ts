@@ -14,13 +14,13 @@ import { EmployerService } from 'src/employer/employer.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Employer, Conversation]),
+    TypeOrmModule.forFeature([User, Conversation]),
     AuthModule,
     UsersModule,
     CachingModule,
-    EmployerModule,
   ],
   controllers: [ConversationsController],
-  providers: [ConversationsService, JwtService, EmployerService],
+  providers: [ConversationsService, JwtService],
+  exports: [ConversationsService],
 })
 export class ConversationsModule {}

@@ -36,8 +36,6 @@ export class Employer {
   jobs: Job[];
   @OneToMany(() => Review, (review) => review.employer)
   reviews: Review[];
-  @OneToMany(() => Conversation, (conversation) => conversation.employer)
-  conversations: Conversation[];
   @ManyToMany(() => User, (user) => user.followed_companies)
   @JoinTable({
     name: 'following',
