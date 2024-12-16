@@ -1,4 +1,4 @@
-JobsListingApp
+
 JobsListingApp is a robust backend application developed using NestJS, designed to power a job listing platform. It provides RESTful APIs for managing job postings, user authentication, and application processes, serving as the core engine for a comprehensive job marketplace.
 
 Key Features
@@ -27,16 +27,19 @@ To set up the project locally:
 Clone the repository:
 
 bash
+
 Copy code
 git clone https://github.com/walidaguib7/JobsListingApp.git
 Navigate to the project directory:
 
 bash
+
 Copy code
 cd JobsListingApp
 Install dependencies:
 
 bash
+
 Copy code
 npm install
 Configure the environment variables:
@@ -48,11 +51,13 @@ Refer to .env.example for the required variables and provide appropriate values.
 Run database migrations:
 
 bash
+
 Copy code
 npm run typeorm migration:run
 Start the application:
 
 bash
+
 Copy code
 npm run start:dev
 Access the API documentation:
