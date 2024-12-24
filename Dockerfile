@@ -1,10 +1,25 @@
-FROM node:lts-alpine
-ENV NODE_ENV=production
+FROM node:20
+
+# Set the working directory inside the container
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+COPY uploads ./
+COPY config ./
+COPY utils ./
+
+# Install the application dependencies
+RUN npm install
+
+# Copy the rest of the application files
 COPY . .
+
+# Build the NestJS application
+RUN npm run build
+
+# Expose the application port
 EXPOSE 3000
-RUN chown -R node /usr/src/app
-USER node
-CMD ["npm", "start"]
+
+# Command to run the application
+CMD ["node", "dist/src/main"]

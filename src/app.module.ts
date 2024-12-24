@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import dataSource, { dataSourceOptions } from 'config/database/data-source';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MediaModule } from './media/media.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailModule } from 'config/mail/mail.module';
-import { RedisModule } from '@nestjs-modules/ioredis';
+import { RedisModule, RedisModuleOptions } from '@nestjs-modules/ioredis';
 import { EmployerModule } from './employer/employer.module';
 import { JobModule } from './job/job.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -20,6 +18,10 @@ import { FollowingModule } from './following/following.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ConversationsModule } from './conversations/conversations.module';
 import { MessagesModule } from './messages/messages.module';
+import * as dotnev from 'dotenv';
+import { RedisOptions } from 'ioredis';
+
+dotnev.config();
 
 @Module({
   imports: [
@@ -37,18 +39,19 @@ import { MessagesModule } from './messages/messages.module';
         from: 'JobsApp@dev.org',
       },
     }),
-    RedisModule.forRoot(
-      {
+
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot(dataSourceOptions),
+    RedisModule.forRootAsync({
+      useFactory: (config: ConfigService): RedisModuleOptions => ({
         type: 'single',
         options: {
-          port: 6379,
-          host: 'localhost',
+          host: config.get<string>('REDIS_HOST'),
+          port: parseInt(config.get('REDIS_PORT')),
         },
-      },
-      '',
-    ),
-    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
-    TypeOrmModule.forRoot(dataSourceOptions),
+      }),
+      inject: [ConfigService],
+    }),
     UsersModule,
     AuthModule,
     MediaModule,
@@ -63,7 +66,5 @@ import { MessagesModule } from './messages/messages.module';
     ConversationsModule,
     MessagesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

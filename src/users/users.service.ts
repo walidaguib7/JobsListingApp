@@ -59,11 +59,11 @@ export class UsersService {
     const media = await this.mediaService.getFile(dto.mediaId);
     if (!media) throw new NotFoundException('media file not found!');
     user.media = media;
-    // adding verification into redis db
-    const code = randomBytes(3).toString('hex');
-    await this.cacheDB.set(`code_${dto.email}`, code, 'EX', 120);
-    // send email verification
-    await this.mailService.sendEmail(dto.email, code);
+    // // adding verification into redis db
+    // const code = randomBytes(3).toString('hex');
+    // await this.cacheDB.set(`code_${dto.email}`, code, 'EX', 120);
+    // // send email verification
+    // await this.mailService.sendEmail(dto.email, code);
     await this.usersRepository.save(user);
   }
 

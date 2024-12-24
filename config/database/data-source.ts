@@ -1,14 +1,17 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
+import * as dotnev from 'dotenv';
+
+dotnev.config();
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  database: 'Jobs',
+  database: process.env.DB_NAME,
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/config/database/migrations/*.js'],
-  username: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  password: 'walidaguib',
+  username: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT) || 5432,
+  password: process.env.DB_PASSWORD,
   synchronize: true,
 };
 

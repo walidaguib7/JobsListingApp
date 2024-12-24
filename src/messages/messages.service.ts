@@ -25,12 +25,8 @@ export class MessagesService {
     private readonly cachingService: CachingService,
   ) {}
 
-  async getAllMessages(
-    conversationId: number,
-    paginationDto: MessagesPaginator,
-  ) {
-    const { limit, page } = paginationDto;
-    const key = `messages_${conversationId}_${limit}_${page}`;
+  async getAllMessages(conversationId: number) {
+    const key = `messages_${conversationId}`;
     const cachedMessages =
       await this.cachingService.getFromCache<Messages[]>(key);
     if (cachedMessages) return cachedMessages;

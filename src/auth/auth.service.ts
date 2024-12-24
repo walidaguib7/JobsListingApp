@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/users/dtos/create.dto';
@@ -28,7 +28,11 @@ export class AuthService {
   }
 
   async SignUp(dto: CreateUserDto): Promise<void> {
-    await this.userService.createUser(dto);
+    try {
+      await this.userService.createUser(dto);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async login(user: User) {

@@ -22,9 +22,8 @@ export class MessagesController {
   @Get(':conversationId')
   async fetchAll(
     @Param('conversationId', ParseIntPipe) conversationId: number,
-    @Query() query: MessagesPaginator,
   ) {
-    return await this.messagesService.getAllMessages(conversationId, query);
+    return await this.messagesService.getAllMessages(conversationId);
   }
 
   @Patch(':id')
