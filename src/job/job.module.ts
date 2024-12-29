@@ -30,7 +30,7 @@ import { FollowingService } from 'src/following/following.service';
   ],
 
   controllers: [JobController],
-  providers: [JobService, EmployerService, JwtService, Redis, FollowingService],
+  providers: [JobService, EmployerService, JwtService, FollowingService],
   exports: [JobService],
 })
 export class JobModule {}

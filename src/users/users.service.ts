@@ -14,13 +14,14 @@ import { MediaService } from 'src/media/media.service';
 import Redis from 'ioredis';
 import { MailService } from 'config/mail/mail.service';
 import { randomBytes } from 'crypto';
+import { CachingService } from 'config/caching/caching.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
     private readonly mediaService: MediaService,
-    private readonly cacheDB: Redis,
+    private readonly cachingService: CachingService,
     private readonly mailService: MailService,
   ) {}
 
@@ -59,11 +60,11 @@ export class UsersService {
     const media = await this.mediaService.getFile(dto.mediaId);
     if (!media) throw new NotFoundException('media file not found!');
     user.media = media;
-    // // adding verification into redis db
-    // const code = randomBytes(3).toString('hex');
-    // await this.cacheDB.set(`code_${dto.email}`, code, 'EX', 120);
-    // // send email verification
-    // await this.mailService.sendEmail(dto.email, code);
+    // adding verification into redis db
+    const code = randomBytes(3).toString('hex');
+    await this.cachingService.setAsync(`code_${dto.email}`, code);
+    // send email verification
+    await this.mailService.sendEmail(dto.email, code);
     await this.usersRepository.save(user);
   }
 
@@ -96,14 +97,13 @@ export class UsersService {
       email: email,
     });
     if (!user) throw new NotFoundException();
-    const verification_code = await this.cacheDB.get(`code_${email}`);
+    const verification_code = await this.cachingService.getFromCache<string>(
+      `code_${email}`,
+    );
     if (code == verification_code) {
       user.isVerified = true;
       await this.usersRepository.save(user);
     } else throw new BadRequestException('verification code is invalid!');
-    const cachedData = await this.cacheDB.keys('code_*');
-    for (const item in cachedData) {
-      await this.cacheDB.del(item);
-    }
+    await this.cachingService.removeByPattern('code');
   }
 }

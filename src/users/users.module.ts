@@ -11,6 +11,8 @@ import { MediaModule } from 'src/media/media.module';
 import { Media } from 'src/media/media.entity';
 import Redis from 'ioredis';
 import { MailModule } from 'config/mail/mail.module';
+import { CachingModule } from 'config/caching/caching.module';
+import { CachingService } from 'config/caching/caching.service';
 
 @Module({
   imports: [
@@ -18,9 +20,10 @@ import { MailModule } from 'config/mail/mail.module';
     TypeOrmModule.forFeature([User, Media]),
     forwardRef(() => AuthModule),
     MediaModule,
+    CachingModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService, JwtService, Redis],
+  providers: [UsersService, JwtService, CachingService],
   exports: [UsersService],
 })
 export class UsersModule {}

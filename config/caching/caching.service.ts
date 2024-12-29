@@ -1,46 +1,55 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import Redis from 'ioredis';
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 
 @Injectable()
 export class CachingService {
-  constructor(private readonly RedisCache: Redis) {}
+  constructor(@Inject(CACHE_MANAGER) private readonly cacheService: Cache) {}
 
   async getFromCache<T>(key: string): Promise<T | null> {
     try {
-      const cachedData = await this.RedisCache.get(key);
+      const cachedData = await this.cacheService.get<T>(key);
       if (!cachedData) return null;
-
-      return JSON.parse(cachedData) as T;
+      return JSON.stringify(cachedData) as T;
     } catch (error) {
+      console.error(`Error retrieving cache for key ${key}:`, error);
       return null;
     }
   }
 
-  async setAsync<T>(key: string, value: T): Promise<void> {
+  async setAsync<T>(key: string, value: T, ttl: number = 240): Promise<void> {
     try {
       const serializedData = JSON.stringify(value);
-      await this.RedisCache.set(key, serializedData, 'EX', 240); // expires in 4 minutes
+      await this.cacheService.set(key, serializedData); // ttl in seconds
     } catch (error) {
-      throw new BadRequestException(error);
+      console.error(`Error setting cache for key ${key}:`, error);
+      throw new BadRequestException('Failed to set cache.');
     }
   }
 
   async removeCaching(key: string): Promise<void> {
     try {
-      await this.RedisCache.del(key);
+      await this.cacheService.del(key);
     } catch (error) {
-      throw new BadRequestException(error);
+      console.error(`Error removing cache for key ${key}:`, error);
+      throw new BadRequestException('Failed to remove cache.');
     }
   }
 
   async removeByPattern(pattern: string): Promise<void> {
     try {
-      const keys = await this.RedisCache.keys(`${pattern}*`);
-      if (keys.length) {
-        await this.RedisCache.del(...keys);
+      // Assuming your CacheManager supports the keys command
+      const keys = await this.cacheService.store.keys(`${pattern}*`);
+      if (keys && keys.length) {
+        await Promise.all(keys.map((key) => this.cacheService.del(key)));
       }
     } catch (error) {
-      throw new BadRequestException(error);
+      console.error(`Error removing cache by pattern ${pattern}:`, error);
+      throw new BadRequestException('Failed to remove cache by pattern.');
     }
   }
 }

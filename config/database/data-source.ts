@@ -5,13 +5,13 @@ dotnev.config();
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  database: process.env.DB_NAME,
+  database: 'Jobs',
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/config/database/migrations/*.js'],
-  username: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT) || 5432,
-  password: process.env.DB_PASSWORD,
+  username: 'postgres',
+  host: 'db',
+  port: 5432,
+  password: 'postgres',
   synchronize: true,
 };
 
