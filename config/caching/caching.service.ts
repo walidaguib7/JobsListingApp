@@ -12,22 +12,22 @@ export class CachingService {
 
   async getFromCache<T>(key: string): Promise<T | null> {
     try {
-      const cachedData = await this.cacheService.get<T>(key);
-      if (!cachedData) return null;
+      const cachedData = await this.cacheService.get(key);
+      if (!cachedData) {
+        return null;
+      }
       return JSON.stringify(cachedData) as T;
     } catch (error) {
-      console.error(`Error retrieving cache for key ${key}:`, error);
       return null;
     }
   }
 
-  async setAsync<T>(key: string, value: T, ttl: number = 240): Promise<void> {
+  async setAsync<T>(key: string, value: T): Promise<void> {
     try {
       const serializedData = JSON.stringify(value);
-      await this.cacheService.set(key, serializedData); // ttl in seconds
+      await this.cacheService.set(key, serializedData, 240); // Default TTL is 4 minutes
     } catch (error) {
-      console.error(`Error setting cache for key ${key}:`, error);
-      throw new BadRequestException('Failed to set cache.');
+      throw new BadRequestException('Failed to set data in cache.');
     }
   }
 
@@ -35,21 +35,25 @@ export class CachingService {
     try {
       await this.cacheService.del(key);
     } catch (error) {
-      console.error(`Error removing cache for key ${key}:`, error);
-      throw new BadRequestException('Failed to remove cache.');
+      throw new BadRequestException('Failed to remove data from cache.');
     }
   }
 
   async removeByPattern(pattern: string): Promise<void> {
     try {
-      // Assuming your CacheManager supports the keys command
+      // Fetch all keys matching the pattern
       const keys = await this.cacheService.store.keys(`${pattern}*`);
-      if (keys && keys.length) {
-        await Promise.all(keys.map((key) => this.cacheService.del(key)));
+
+      // If there are matching keys, delete them
+      if (keys.length > 0) {
+        for (const key of keys) {
+          await this.cacheService.del(key); // Correctly delete the key
+        }
       }
     } catch (error) {
-      console.error(`Error removing cache by pattern ${pattern}:`, error);
-      throw new BadRequestException('Failed to remove cache by pattern.');
+      throw new BadRequestException(
+        'Failed to remove data from cache by pattern.',
+      );
     }
   }
 }
