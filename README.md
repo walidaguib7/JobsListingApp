@@ -40,9 +40,13 @@ Validation: class-validator - Library for validating object schemas and ensuring
 ## Project setup
 
 Clone the repository.
+
 Install dependencies: npm install
+
 Run the application in development mode: npm run start:dev
+
 (Optional) Build the Docker image: docker-compose build
+
 Run the application using Docker: docker-compose up
 
 ## License
