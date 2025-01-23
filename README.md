@@ -3,17 +3,6 @@
 
 ## Description
 
-## Project setup
-
-```bash
-$ docker compose up --build
-```
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-=======
-## Project Description
-
 JobsListingApp is a robust backend application developed using NestJS, designed to power a job listing platform. It provides RESTful APIs for managing job postings, user authentication, and application processes, serving as the core engine for a comprehensive job marketplace.
 
 Key Features
@@ -35,6 +24,18 @@ Database: TypeORM - An ORM for TypeScript and JavaScript, enabling seamless data
 Authentication: Passport - Middleware for authentication in Node.js applications.
 
 Validation: class-validator - Library for validating object schemas.
+
+## Project setup
+
+```bash
+$ docker compose up --build
+```
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+=======
+
+
 
 
 
